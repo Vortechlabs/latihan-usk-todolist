@@ -15,7 +15,7 @@ $sql = "
 SELECT 
     todo.*, 
     category.category AS category_name,
-    favorites.id_favorite
+    favorites.id_favorites
 FROM todo
 JOIN category ON todo.id_category = category.id_category
 LEFT JOIN favorites 
@@ -32,7 +32,6 @@ if(isset($_GET['category_filter']) && $_GET['category_filter'] != ''){
 $query = mysqli_query($conn, $sql);
 
 $row  =  mysqli_fetch_assoc($query);
-$id_todo = $row['id_todo'];
 
 // $sqlfavorites = mysqli_query($conn, "SELECT * FROM favorites WHERE id_todo = $id_todo");
 // $queryfavorites = mysqli_num_rows($sqlfavorites) > 0;
@@ -93,26 +92,28 @@ $id_todo = $row['id_todo'];
                     <a href='hapus-todo.php?id_todo=<?= $row['id_todo'] ?>'><button class='btn-danger'>Hapus</button></a>
                 </div>
                 <div>
-                   <?php $isFavorite = !is_null($row['id_favorite']); ?>
+                   <?php $isFavorite = !is_null($row['id_favorites']); $todo = $row['id_todo'];;?>
 
-<a href="add-to-wishlist.php?id_todo=<?= $row['id_todo'] ?>">
-    <button 
-        style="
-            border-radius: 100%;
-            width: 2rem;
-            height: 2rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: <?= $isFavorite ? '#e11d48' : '#d1d5db' ?>;
-            color: white;
-            border: none;
-            cursor: pointer;
-        "
-    >
-        💘
-    </button>
-</a>
+                   
+
+                <a  href="<?= $isFavorite ? "delete-from-wishlist.php?id_todo=$todo"  : "add-to-wishlist.php?id_todo=$todo" ?>">
+                    <button 
+                        style="
+                            border-radius: 100%;
+                            width: 2rem;
+                            height: 2rem;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            background-color: <?= $isFavorite ? '#e11d48' : '#d1d5db' ?>;
+                            color: white;
+                            border: none;
+                            cursor: pointer;
+                        "
+                    >
+                        💘
+                    </button>
+                </a>
 
                 </div>
             </div>
