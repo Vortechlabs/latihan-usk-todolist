@@ -122,6 +122,7 @@ Todo List App adalah aplikasi web untuk mengelola daftar tugas harian Anda. Diba
 - description (TEXT)
 - status (ENUM: 'pending', 'done')
 - created_at (TIMESTAMP)
+- updated_at (TIMESTAMP)
 ```
 
 ### Tabel: `favorites`
@@ -129,7 +130,6 @@ Todo List App adalah aplikasi web untuk mengelola daftar tugas harian Anda. Diba
 - id_favorites (INT, PRIMARY KEY, AUTO_INCREMENT)
 - id_user (INT, FOREIGN KEY)
 - id_todo (INT, FOREIGN KEY)
-- created_at (TIMESTAMP)
 ```
 
 ---
@@ -275,7 +275,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 **Al Zaki Ibra Ramadani**
 
-- GitHub: [@yourusername](https://github.com/VortechLabs)
+- GitHub: [@VortechLabs](https://github.com/VortechLabs)
 - Email: alzak1ibra@gmail.com
 
 ---
