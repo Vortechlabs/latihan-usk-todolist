@@ -11,6 +11,17 @@ if(!isset($id_user) && $id_user == ''){
 $id_todo = $_GET['id_todo'];
 $id_user = $id_user;
 
+$cek = mysqli_query($conn, 
+    "SELECT * FROM favorites 
+     WHERE id_todo = $id_todo AND id_user = $id_user"
+);
+
+if(mysqli_num_rows($cek) > 0){
+    header("Location: index.php?message=Sudah ada di favorit");
+    exit;
+}
+
+
 $sql = "INSERT INTO `favorites`
         (`id_todo`, `id_user`)
         VALUES ('$id_todo', '$id_user')";
