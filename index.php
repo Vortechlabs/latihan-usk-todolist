@@ -93,8 +93,27 @@ $id_todo = $row['id_todo'];
                     <a href='hapus-todo.php?id_todo=<?= $row['id_todo'] ?>'><button class='btn-danger'>Hapus</button></a>
                 </div>
                 <div>
-                    <!-- <?= $queryfavorites ? '<p>test</p>' : '<p>ggl</p>' ?> -->
-                    <a href="add-to-wishlist.php?id_todo=<?= $row['id_todo'] ?>"><button style="border-radius: 100%; width: 2rem; height: 2rem; display: flex; justify-content: center;">💘</button></a>
+                   <?php $isFavorite = !is_null($row['id_favorite']); ?>
+
+<a href="add-to-wishlist.php?id_todo=<?= $row['id_todo'] ?>">
+    <button 
+        style="
+            border-radius: 100%;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: <?= $isFavorite ? '#e11d48' : '#d1d5db' ?>;
+            color: white;
+            border: none;
+            cursor: pointer;
+        "
+    >
+        💘
+    </button>
+</a>
+
                 </div>
             </div>
             </div>
