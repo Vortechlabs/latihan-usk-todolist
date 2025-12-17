@@ -11,14 +11,25 @@ if(!isset($id_user) && $id_user == ''){
 $sqlcategory = 'SELECT * FROM category';
 $querycategory = mysqli_query($conn, $sqlcategory);
 
+$sql = "
+SELECT 
+    todo.*, 
+    category.category AS category_name,
+    favorites.id_favorite
+FROM todo
+JOIN category ON todo.id_category = category.id_category
+LEFT JOIN favorites 
+    ON favorites.id_todo = todo.id_todo 
+    AND favorites.id_user = $id_user
+WHERE todo.id_user = $id_user
+";
+
 if(isset($_GET['category_filter']) && $_GET['category_filter'] != ''){
     $id_category = $_GET['category_filter'];
-    $sql = "SELECT todo.*, category.category as category_name FROM todo JOIN category WHERE todo.id_category = category.id_category AND todo.id_category = $id_category AND todo.id_user = $id_user";
-    $query = mysqli_query($conn, $sql);
-}else{
-    $sql = "SELECT todo.*, category.category as category_name FROM todo JOIN category WHERE todo.id_category = category.id_category AND todo.id_user = $id_user";
-    $query = mysqli_query($conn, $sql);
+    $sql .= " AND todo.id_category = $id_category";
 }
+
+$query = mysqli_query($conn, $sql);
 
 $row  =  mysqli_fetch_assoc($query);
 $id_todo = $row['id_todo'];
