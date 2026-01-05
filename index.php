@@ -64,18 +64,6 @@ $row  =  mysqli_fetch_assoc($query);
                     </option>
                 <?php } ?>
             </select><br><br>
-            <!-- <label for='status_filter'>Filter Status</label>
-        <select name="status_filter" id="status_filter" style="width: 10%;" onchange="this.form.submit()">
-            <option value="">Semua</option>
-             <option value="done">
-             <?= isset($_GET['status_filter']) && $_GET['status_filter'] == 'done' ? 'selected' : '' ?>
-             Done
-             </option>
-             <option value="pending">
-             <?= isset($_GET['status_filter']) && $_GET['status_filter'] == 'pending' ? 'selected' : '' ?>
-             Pending
-             </option>
-        </select> -->
         </form>
 
         <div style="display: flex; justify-content: center; margin: 1rem 0;">
@@ -85,7 +73,8 @@ $row  =  mysqli_fetch_assoc($query);
         <div class="card-container">
             <?php while ($row  =  mysqli_fetch_assoc($query)) { ?>
                 <div class='card <?= $row['status'] == 'done' ? 'dark' : 'white' ?>'>
-                    <h3 class='<?= $row['status'] == 'done' ? 'line-through' : '' ?>'><?= $row['title'] ?></h3>
+                    <h3 class='title <?= $row['status'] == 'done' ? 'line-through' : '' ?>'><?= $row['title'] ?></h3>
+                    <!-- <h3 style="<?= $row['status'] == 'done' ? 'text-decoration: line-through;' : '' ?>"><?= $row['title'] ?></h3> -->  <!-- Versi style langung -->
                     <p class='<?= $row['status'] == 'done' ? 'line-through' : '' ?>'><?= $row['description'] ?></p>
                     <p class='<?= $row['status'] == 'done' ? 'line-through' : '' ?>'><b>Kategori:</b> <?= $row['category_name'] ?></p>
                     <p class='<?= $row['status'] == 'done' ? 'line-through' : '' ?>'><b>Status:</b> <?= $row['status'] ?></p>
@@ -97,8 +86,6 @@ $row  =  mysqli_fetch_assoc($query);
                         <div>
                             <?php $isFavorite = !is_null($row['id_favorites']);
                             $todo = $row['id_todo'];; ?>
-
-
 
                             <a href="<?= $isFavorite ? "delete-from-wishlist.php?id_todo=$todo"  : "add-to-wishlist.php?id_todo=$todo" ?>">
                                 <button

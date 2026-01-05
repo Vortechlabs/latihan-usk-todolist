@@ -2,10 +2,12 @@
     padding: 0;
     margin: 0;
     font-family: 'Poppins', sans-serif;
+    overflow: hidden;
 }
 
 body{
     background-color: antiquewhite;
+    overflow: hidden;
 }
 
 main{
@@ -99,6 +101,13 @@ select{
     grid-template-columns: auto auto auto;
     gap: 1rem;
     padding: 0 5rem;
+}
+
+.title{
+    white-space: nowrap;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .card{

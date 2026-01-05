@@ -26,6 +26,7 @@ $query = mysqli_query($conn, $sql);
         <div class="form-container">
             <center><h1>Tambah Tugas</h1></center>
             <form action="proses-tambah.php" method="POST">
+
                 <div>
                     <label for="title">Judul</label><br>
                     <input type="text" name="title" id="title">
