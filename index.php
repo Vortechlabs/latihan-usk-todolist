@@ -4,7 +4,7 @@ require "koneksi.php";
 
 $id_user = $_SESSION['id_user'];
 
-if(!isset($id_user) && $id_user == ''){
+if (!isset($id_user) && $id_user == '') {
     Header('Location: login.php');
 }
 
@@ -24,7 +24,7 @@ LEFT JOIN favorites
 WHERE todo.id_user = $id_user
 ";
 
-if(isset($_GET['category_filter']) && $_GET['category_filter'] != ''){
+if (isset($_GET['category_filter']) && $_GET['category_filter'] != '') {
     $id_category = $_GET['category_filter'];
     $sql .= " AND todo.id_category = $id_category";
 }
@@ -40,65 +40,69 @@ $row  =  mysqli_fetch_assoc($query);
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todolist</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <?php require "navbar.php"; ?>
     <main>
 
-    <form method="GET" style="display: flex; gap: 0.5rem; align-items: center; justify-content: center;">
-        <label for='category_filter'>Filter kategori</label>
-        <select name="category_filter" id="category_filter" style="width: 10%;" onchange="this.form.submit()">
-            <option value="">Semua</option>
-            <?php while($row =  mysqli_fetch_assoc($querycategory)){ ?>
-             <option value="<?= $row['id_category'] ?>">
-             <?= isset($_GET['category_filter']) && $_GET['category_filter'] == $row['id_category'] ? 'selected' : ''?>
-             <?= $row['category'] ?>
-             </option>
-            <?php }?>
-        </select><br><br>
-        <!-- <label for='status_filter'>Filter Status</label>
+        <form method="GET" style="display: flex; gap: 0.5rem; align-items: center; justify-content: center;">
+            <label for='category_filter'>Filter kategori</label>
+            <select name="category_filter" id="category_filter" style="width: 10%;" onchange="this.form.submit()">
+                <option value="">Semua</option>
+                <?php while ($row =  mysqli_fetch_assoc($querycategory)) { ?>
+                    <option
+                        value="<?= $row['id_category'] ?>"
+                        <?= (isset($_GET['category_filter']) && $_GET['category_filter'] == $row['id_category']) ? 'selected' : '' ?>>
+                        <?= $row['category'] ?>
+                    </option>
+                <?php } ?>
+            </select><br><br>
+            <!-- <label for='status_filter'>Filter Status</label>
         <select name="status_filter" id="status_filter" style="width: 10%;" onchange="this.form.submit()">
             <option value="">Semua</option>
              <option value="done">
-             <?= isset($_GET['status_filter']) && $_GET['status_filter'] == 'done' ? 'selected' : ''?>
+             <?= isset($_GET['status_filter']) && $_GET['status_filter'] == 'done' ? 'selected' : '' ?>
              Done
              </option>
              <option value="pending">
-             <?= isset($_GET['status_filter']) && $_GET['status_filter'] == 'pending' ? 'selected' : ''?>
+             <?= isset($_GET['status_filter']) && $_GET['status_filter'] == 'pending' ? 'selected' : '' ?>
              Pending
              </option>
         </select> -->
-</form>
+        </form>
 
-    <div style="display: flex; justify-content: center; margin: 1rem 0;">
-            <a href="tambah-todo.php"><button class="btn-success" >[+] Tambah</button></a>
+        <div style="display: flex; justify-content: center; margin: 1rem 0;">
+            <a href="tambah-todo.php"><button class="btn-success">[+] Tambah</button></a>
         </div>
 
         <div class="card-container">
-            <?php while($row  =  mysqli_fetch_assoc($query)){ ?>
-            <div class='card <?= $row['status'] == 'done' ? 'dark' : 'white' ?>'>
-            <h3 class='<?= $row['status'] == 'done' ? 'line-through' : '' ?>'><?= $row['title'] ?></h3>
-            <p  class='<?= $row['status'] == 'done' ? 'line-through' : '' ?>'><?= $row['description'] ?></p>
-            <p  class='<?= $row['status'] == 'done' ? 'line-through' : '' ?>'><b>Kategori:</b> <?= $row['category_name'] ?></p>
-            <p  class='<?= $row['status'] == 'done' ? 'line-through' : '' ?>'><b>Status:</b> <?= $row['status'] ?></p>
-            <div style="display: flex; justify-content: space-between;">
-                <div style='display: flex; gap: 1rem; align-items: center; margin-top: 1rem;'>
-                    <a href='edit-todo.php?id_todo=<?= $row['id_todo'] ?>'><button class='btn-primary'>Edit</button></a>
-                    <a href='hapus-todo.php?id_todo=<?= $row['id_todo'] ?>'><button class='btn-danger'>Hapus</button></a>
-                </div>
-                <div>
-                   <?php $isFavorite = !is_null($row['id_favorites']); $todo = $row['id_todo'];;?>
+            <?php while ($row  =  mysqli_fetch_assoc($query)) { ?>
+                <div class='card <?= $row['status'] == 'done' ? 'dark' : 'white' ?>'>
+                    <h3 class='<?= $row['status'] == 'done' ? 'line-through' : '' ?>'><?= $row['title'] ?></h3>
+                    <p class='<?= $row['status'] == 'done' ? 'line-through' : '' ?>'><?= $row['description'] ?></p>
+                    <p class='<?= $row['status'] == 'done' ? 'line-through' : '' ?>'><b>Kategori:</b> <?= $row['category_name'] ?></p>
+                    <p class='<?= $row['status'] == 'done' ? 'line-through' : '' ?>'><b>Status:</b> <?= $row['status'] ?></p>
+                    <div style="display: flex; justify-content: space-between;">
+                        <div style='display: flex; gap: 1rem; align-items: center; margin-top: 1rem;'>
+                            <a href='edit-todo.php?id_todo=<?= $row['id_todo'] ?>'><button class='btn-primary'>Edit</button></a>
+                            <a href='hapus-todo.php?id_todo=<?= $row['id_todo'] ?>'><button class='btn-danger'>Hapus</button></a>
+                        </div>
+                        <div>
+                            <?php $isFavorite = !is_null($row['id_favorites']);
+                            $todo = $row['id_todo'];; ?>
 
-                   
 
-                <a  href="<?= $isFavorite ? "delete-from-wishlist.php?id_todo=$todo"  : "add-to-wishlist.php?id_todo=$todo" ?>">
-                    <button 
-                        style="
+
+                            <a href="<?= $isFavorite ? "delete-from-wishlist.php?id_todo=$todo"  : "add-to-wishlist.php?id_todo=$todo" ?>">
+                                <button
+                                    style="
                             border-radius: 100%;
                             width: 2rem;
                             height: 2rem;
@@ -109,17 +113,17 @@ $row  =  mysqli_fetch_assoc($query);
                             color: white;
                             border: none;
                             cursor: pointer;
-                        "
-                    >
-                        💘
-                    </button>
-                </a>
+                        ">
+                                    💘
+                                </button>
+                            </a>
 
+                        </div>
+                    </div>
                 </div>
-            </div>
-            </div>
             <?php } ?>
         </div>
     </main>
 </body>
+
 </html>

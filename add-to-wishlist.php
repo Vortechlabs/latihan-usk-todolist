@@ -21,7 +21,6 @@ if(mysqli_num_rows($cek) > 0){
     exit;
 }
 
-
 $sql = "INSERT INTO `favorites`
         (`id_todo`, `id_user`)
         VALUES ('$id_todo', '$id_user')";

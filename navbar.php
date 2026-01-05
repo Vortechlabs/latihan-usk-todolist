@@ -9,7 +9,6 @@ $name = $user['name'];
 <nav>
     <h2>TodoList</h2>
     <div class="nav-menu">
-        
 
         <?php
         
